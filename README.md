@@ -3925,7 +3925,7 @@ Found a mistake, have a better explanation, or want to add more questions?
 | ------ | ---------- |
 |  Live | [react-interview-questions](https://github.com/sisi-tarak/react-interview-questions) |
 |  Live | [nodejs-interview-questions](https://github.com/sisi-tarak/nodejs-interview-questions) |
-| 🔜 Coming | mern-interview-questions |
+|  Live | [mern-interview-questions](https://github.com/sisi-tarak/mern-interview-questions.git) |
 | 🔜 Coming | dsa-interview-questions |
 | 🔜 Coming | java-interview-questions |
 | 🔜 Coming | python-interview-questions |
