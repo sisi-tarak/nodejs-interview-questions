@@ -3901,7 +3901,7 @@ db.exec('CREATE TABLE users (id INTEGER, name TEXT)');
 
 [![Star this repo](https://img.shields.io/github/stars/sisi-tarak/nodejs-interview-questions?style=social)](https://github.com/sisi-tarak/nodejs-interview-questions)
 
----
+
 
 ### 📲 Follow Sisi for more tech interview prep content
 
