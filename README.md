@@ -3891,14 +3891,11 @@ db.exec('CREATE TABLE users (id INTEGER, name TEXT)');
 **[⬆ Back to Top](#table-of-contents)**
 
 <br>
-
----
+<br>
 
 <div align="center">
 
 ## 🎉 You've covered all 100 Node.js Interview Questions!
-
----
 
 **If this repo helped you prepare, please give it a ⭐**
 
