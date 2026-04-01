@@ -236,9 +236,9 @@ V8 also manages **Garbage Collection** — automatically freeing memory that is 
 | ------- | ------- | ------------------ |
 | Environment | Server-side | Client-side |
 | Global object | `global` | `window` |
-| DOM access | ❌ No DOM | ✅ Yes |
-| File system access | ✅ Yes (`fs` module) | ❌ No |
-| Networking | ✅ Full TCP/UDP | Limited (fetch/XHR) |
+| DOM access |   No DOM |  Yes |
+| File system access |  Yes (`fs` module) |   No |
+| Networking |  Full TCP/UDP | Limited (fetch/XHR) |
 | Module system | CommonJS (`require`) / ESM | ESM (`import`) |
 | APIs | `http`, `fs`, `os`, `path`, etc. | `document`, `window`, `localStorage` |
 | Purpose | Build servers, CLIs, tools | Build UIs, interact with browser |
@@ -305,7 +305,7 @@ npm audit                # check for security vulnerabilities
 | ------- | --- | --- |
 | Full form | Node Package Manager | Node Package Execute |
 | Purpose | Install and manage packages | Execute packages without installing globally |
-| Global install needed? | Yes (for CLI tools) | ❌ No — downloads and runs on the fly |
+| Global install needed? | Yes (for CLI tools) |   No — downloads and runs on the fly |
 | Use case | Managing dependencies | Running one-time CLI commands |
 
 ```bash
@@ -362,10 +362,10 @@ console.log(PI);              // 3.14159
 | Syntax | `require()` / `module.exports` | `import` / `export` |
 | Loading | Synchronous | Asynchronous |
 | File extension | `.js` (default) | `.mjs` or `"type": "module"` in package.json |
-| Tree shaking | ❌ Not supported | ✅ Supported |
-| Top-level await | ❌ Not supported | ✅ Supported |
-| Default in Node.js | ✅ Yes (legacy) | Modern standard |
-| `__dirname` / `__filename` | ✅ Available | ❌ Not available (use `import.meta.url`) |
+| Tree shaking |   Not supported |  Supported |
+| Top-level await |   Not supported |  Supported |
+| Default in Node.js |  Yes (legacy) | Modern standard |
+| `__dirname` / `__filename` |  Available |   Not available (use `import.meta.url`) |
 
 ```js
 // CommonJS
@@ -486,7 +486,7 @@ process.on('uncaughtException', (err) => {
 | Execution | Line by line, blocks until done | Non-blocking — continues execution |
 | Thread usage | Blocks the thread | Frees the thread while waiting |
 | Use case | Simple scripts, CPU tasks | I/O operations, API calls, DB queries |
-| Performance | Poor for I/O | ✅ Excellent for I/O |
+| Performance | Poor for I/O |  Excellent for I/O |
 
 ```js
 const fs = require('fs');
@@ -557,7 +557,7 @@ fetchUser(1, (err, user) => {
 Callback hell (also called the **Pyramid of Doom**) is a situation where multiple nested callbacks make code deeply indented, hard to read, and hard to maintain.
 
 ```js
-// ❌ Callback hell — deeply nested
+//   Callback hell — deeply nested
 getUser(userId, (err, user) => {
   if (err) return handleError(err);
   getOrders(user.id, (err, orders) => {
@@ -572,7 +572,7 @@ getUser(userId, (err, user) => {
   });
 });
 
-// ✅ Solution 1: Promises
+//  Solution 1: Promises
 getUser(userId)
   .then(user => getOrders(user.id))
   .then(orders => getProducts(orders[0].id))
@@ -580,7 +580,7 @@ getUser(userId)
   .then(reviews => console.log(reviews))
   .catch(handleError);
 
-// ✅ Solution 2: async/await (cleanest)
+//  Solution 2: async/await (cleanest)
 async function getData(userId) {
   try {
     const user = await getUser(userId);
@@ -675,11 +675,11 @@ main().catch(console.error);
 
 // Parallel execution with async/await
 async function getMultipleUsers() {
-  // ❌ Sequential — slow (waits one by one)
+  //   Sequential — slow (waits one by one)
   const user1 = await fetchGitHubUser('user1');
   const user2 = await fetchGitHubUser('user2');
 
-  // ✅ Parallel — fast (both run simultaneously)
+  //  Parallel — fast (both run simultaneously)
   const [u1, u2] = await Promise.all([
     fetchGitHubUser('user1'),
     fetchGitHubUser('user2')
@@ -909,8 +909,8 @@ undefined
 
 | Type | Key | Purpose | Included in production? |
 | ---- | --- | ------- | ----------------------- |
-| `dependencies` | Runtime packages | Needed for the app to run (Express, Mongoose) | ✅ Yes |
-| `devDependencies` | Development-only packages | Testing, linting, building (Jest, nodemon, ESLint) | ❌ No |
+| `dependencies` | Runtime packages | Needed for the app to run (Express, Mongoose) |  Yes |
+| `devDependencies` | Development-only packages | Testing, linting, building (Jest, nodemon, ESLint) |   No |
 
 ```bash
 # Add to dependencies (production)
@@ -1103,7 +1103,7 @@ console.log('sync');
 
 // Warning: Recursive process.nextTick() can starve the event loop!
 // process.nextTick(function loop() {
-//   process.nextTick(loop); // ❌ I/O will never run
+//   process.nextTick(loop); //   I/O will never run
 // });
 ```
 
@@ -1198,11 +1198,11 @@ Streams are **objects that let you read data from a source or write data to a de
 ```js
 const fs = require('fs');
 
-// Without streams — loads entire 2GB file into memory ❌
+// Without streams — loads entire 2GB file into memory  
 const data = fs.readFileSync('huge-file.csv');
 process(data); // might crash with OOM
 
-// With streams — processes chunk by chunk ✅
+// With streams — processes chunk by chunk 
 const readable = fs.createReadStream('huge-file.csv');
 readable.on('data', (chunk) => {
   process(chunk); // chunk is usually 64KB
@@ -1365,7 +1365,7 @@ emitter.listenerCount('userCreated'); // 2
 | ------- | ------------ | ------- |
 | Purpose | Custom event publishing/subscribing | Efficient data flow |
 | Data | Any event payload | Binary/string data chunks |
-| Backpressure | ❌ No | ✅ Yes |
+| Backpressure |   No |  Yes |
 | Built on | Base class | Extends EventEmitter |
 | Use case | App-level events (user actions) | File/network data processing |
 
@@ -1461,7 +1461,7 @@ if (isMainThread) {
 | Runs | Separate Node.js processes | Threads within one process |
 | Memory | Separate memory per process | Shared memory via `SharedArrayBuffer` |
 | Communication | IPC (Inter-Process Communication) | `postMessage`, `MessageChannel` |
-| Crash isolation | ✅ Worker crash doesn't affect master | ❌ Thread crash can affect process |
+| Crash isolation |  Worker crash doesn't affect master |   Thread crash can affect process |
 | Use case | Scale HTTP servers across CPU cores | CPU-intensive computation in one app |
 | Overhead | Higher (new process each) | Lower (threads are lighter) |
 
@@ -1482,13 +1482,13 @@ Request 1: DB query (50ms wait)
 Request 2: DB query (50ms wait)
 Request 3: DB query (50ms wait)
 
-❌ Thread-per-request model (Java/PHP style):
+  Thread-per-request model (Java/PHP style):
 Thread 1: ████████████ waits 50ms for DB
 Thread 2: ████████████ waits 50ms for DB
 Thread 3: ████████████ waits 50ms for DB
 (3 threads blocked for 50ms each)
 
-✅ Node.js event loop model:
+ Node.js event loop model:
 Single Thread: Sends all 3 DB queries → does other work → callbacks called on completion
 (No thread blocked — event loop is free)
 ```
@@ -1825,7 +1825,7 @@ app.get('*', (req, res) => {
 ```js
 // Without CORS — browser blocks requests from http://localhost:3000 to http://localhost:5000
 
-// ✅ Using the cors package (recommended)
+//  Using the cors package (recommended)
 const cors = require('cors');
 
 // Allow all origins (development only — dangerous in production!)
@@ -1963,8 +1963,8 @@ await User.findByIdAndDelete(id);
 | Structure | Tables with rows and columns | Documents, key-value, graphs, columns |
 | Schema | Fixed, predefined | Flexible/dynamic |
 | Scaling | Vertical (scale up) | Horizontal (scale out) |
-| ACID compliance | ✅ Strong | Varies (MongoDB is ACID in v4+) |
-| Joins | ✅ Native joins | Manual/embedded documents |
+| ACID compliance |  Strong | Varies (MongoDB is ACID in v4+) |
+| Joins |  Native joins | Manual/embedded documents |
 | Best for | Structured data, complex queries | Unstructured/large-scale, flexible data |
 | Examples | MySQL, PostgreSQL, SQLite | MongoDB, Redis, Cassandra, DynamoDB |
 
@@ -2104,13 +2104,13 @@ router.delete('/:id', async (req, res, next) => {
 
 | Method | Purpose | Idempotent? | Has Body? |
 | ------ | ------- | ----------- | --------- |
-| `GET` | Retrieve a resource | ✅ Yes | ❌ No |
-| `POST` | Create a new resource | ❌ No | ✅ Yes |
-| `PUT` | Replace a resource entirely | ✅ Yes | ✅ Yes |
-| `PATCH` | Partially update a resource | ✅ Yes | ✅ Yes |
-| `DELETE` | Delete a resource | ✅ Yes | Optional |
-| `HEAD` | Same as GET but no response body | ✅ Yes | ❌ No |
-| `OPTIONS` | Get allowed methods for a resource (preflight) | ✅ Yes | ❌ No |
+| `GET` | Retrieve a resource |  Yes |   No |
+| `POST` | Create a new resource |   No |  Yes |
+| `PUT` | Replace a resource entirely |  Yes |  Yes |
+| `PATCH` | Partially update a resource |  Yes |  Yes |
+| `DELETE` | Delete a resource |  Yes | Optional |
+| `HEAD` | Same as GET but no response body |  Yes |   No |
+| `OPTIONS` | Get allowed methods for a resource (preflight) |  Yes |   No |
 
 > **Idempotent** means: calling the same request multiple times produces the same result as calling it once.
 
@@ -2152,8 +2152,8 @@ router.delete('/:id', async (req, res, next) => {
 | ------- | ---- | ------- |
 | Endpoints | Multiple (`/users`, `/posts`, `/comments`) | Single endpoint (`/graphql`) |
 | Data fetching | Fixed response structure | Client specifies exact fields needed |
-| Over-fetching | Common | ❌ Eliminated |
-| Under-fetching | Requires multiple requests | ❌ Single request gets all related data |
+| Over-fetching | Common |   Eliminated |
+| Under-fetching | Requires multiple requests |   Single request gets all related data |
 | Versioning | Required (`/api/v1/`, `/api/v2/`) | Not needed (add fields without breaking) |
 | Learning curve | Low | Higher |
 | Best for | Simple CRUD APIs | Complex, nested data; multiple clients |
@@ -2410,10 +2410,10 @@ const hashedPassword = await bcrypt.hash('myPassword123', saltRounds);
 const isMatch = await bcrypt.compare('myPassword123', hashedPassword); // true
 const isMatch2 = await bcrypt.compare('wrongPassword', hashedPassword); // false
 
-// ❌ Never do this:
+//   Never do this:
 user.password = 'plaintext'; // exposed if DB is compromised
 
-// ✅ Always do this:
+//  Always do this:
 user.password = await bcrypt.hash(plainTextPassword, 12);
 ```
 
@@ -2551,24 +2551,24 @@ app.use('/api/auth/register', authLimiter);
 SQL Injection is an attack where **malicious SQL code** is inserted into a query through user input — potentially deleting data, bypassing authentication, or exposing sensitive information.
 
 ```js
-// ❌ VULNERABLE — raw string interpolation
+//   VULNERABLE — raw string interpolation
 const userId = req.params.id; // attacker inputs: "1 OR 1=1"
 const query = `SELECT * FROM users WHERE id = ${userId}`;
 // Executed: SELECT * FROM users WHERE id = 1 OR 1=1 — returns ALL users!
 
 // Another attack: id = "1; DROP TABLE users;"
 
-// ✅ SAFE — parameterized queries (never mix user input into SQL strings)
+//  SAFE — parameterized queries (never mix user input into SQL strings)
 const { rows } = await pool.query('SELECT * FROM users WHERE id = $1', [userId]);
 // pg parameterizes automatically — input is treated as data, not code
 
-// ✅ SAFE — using Prisma (ORM handles parameterization)
+//  SAFE — using Prisma (ORM handles parameterization)
 const user = await prisma.user.findUnique({ where: { id: userId } });
 
-// ✅ SAFE — using Knex.js
+//  SAFE — using Knex.js
 const user = await knex('users').where({ id: userId }).first();
 
-// ✅ Input validation (additional layer — not a replacement)
+//  Input validation (additional layer — not a replacement)
 const { id } = req.params;
 if (!mongoose.isValidObjectId(id)) return res.status(400).json({ error: 'Invalid ID' });
 ```
@@ -2810,7 +2810,7 @@ socket.emit('sendMessage', { roomId: 'room-123', message: 'Hello!' });
 | Connection | New connection per request | Persistent, single connection |
 | Direction | Client → Server (request-response) | Bidirectional (client ↔ server) |
 | Overhead | High (headers on every request) | Low (small frames after handshake) |
-| Real-time | ❌ Requires polling | ✅ Server can push any time |
+| Real-time |   Requires polling |  Server can push any time |
 | Protocol | `http://` / `https://` | `ws://` / `wss://` |
 | Use case | REST APIs, page loads | Chat, live sports, stock tickers, gaming |
 
@@ -2990,25 +2990,25 @@ debug('Server started on port %d', 3000);
 - Promises not resolved/rejected
 
 ```js
-// ❌ Memory leak — global cache grows forever
+//   Memory leak — global cache grows forever
 const cache = {};
 app.get('/data/:id', (req, res) => {
   cache[req.params.id] = fetchExpensiveData(req.params.id);
   res.json(cache[req.params.id]);
 });
 
-// ✅ Fix — use LRU cache with size limit
+//  Fix — use LRU cache with size limit
 const LRU = require('lru-cache');
 const cache = new LRU({ max: 500, ttl: 1000 * 60 * 5 }); // max 500 items, 5min TTL
 
-// ❌ Memory leak — event listener never removed
+//   Memory leak — event listener never removed
 class Service extends EventEmitter {
   start() {
     process.on('SIGTERM', this.shutdown); // added on every start() call!
   }
 }
 
-// ✅ Fix — remove listener on cleanup
+//  Fix — remove listener on cleanup
 start() {
   this.shutdown = this.shutdown.bind(this);
   process.on('SIGTERM', this.shutdown);
@@ -3310,7 +3310,7 @@ The 12-Factor App is a methodology for building **scalable, maintainable, cloud-
 Node.js runs JavaScript on a **single thread**. CPU-intensive operations (like image processing, video encoding, complex math, machine learning) **block the event loop** — preventing any other requests from being handled while the computation runs.
 
 ```js
-// ❌ CPU-intensive task on main thread — blocks everything
+//   CPU-intensive task on main thread — blocks everything
 app.get('/compute', (req, res) => {
   let result = 0;
   for (let i = 0; i < 10_000_000_000; i++) {
@@ -3320,7 +3320,7 @@ app.get('/compute', (req, res) => {
   res.json({ result });
 });
 
-// ✅ Solutions:
+//  Solutions:
 
 // 1. Worker Threads — offload to background thread
 const { Worker } = require('worker_threads');
@@ -3356,14 +3356,14 @@ When the event loop is blocked:
 - **The entire application freezes** until the blocking code finishes
 
 ```js
-// ❌ Synchronous JSON parsing of huge file — blocks event loop
+//   Synchronous JSON parsing of huge file — blocks event loop
 app.get('/parse', (req, res) => {
   const data = fs.readFileSync('huge-100mb.json'); // sync read
   const parsed = JSON.parse(data.toString());      // sync parse — blocks!
   res.json({ count: parsed.length });
 });
 
-// ✅ Always use async APIs for I/O
+//  Always use async APIs for I/O
 app.get('/parse', async (req, res) => {
   const data = await fs.promises.readFile('huge-100mb.json');
   const parsed = JSON.parse(data.toString()); // JSON.parse is still sync but much faster
@@ -3543,7 +3543,7 @@ src/
 Dependency injection means **passing dependencies into a module** rather than having the module create them itself — making code more testable and loosely coupled.
 
 ```js
-// ❌ Without DI — hard to test (UserService creates its own DB dependency)
+//   Without DI — hard to test (UserService creates its own DB dependency)
 class UserService {
   async getUser(id) {
     const user = await User.findById(id); // directly depends on Mongoose
@@ -3551,7 +3551,7 @@ class UserService {
   }
 }
 
-// ✅ With DI — inject the repository
+//  With DI — inject the repository
 class UserService {
   constructor(userRepository) {
     this.userRepository = userRepository; // dependency injected
@@ -3583,10 +3583,10 @@ const service = new UserService(realRepo);
 
 | Method | Use case | Output | Shell? |
 | ------ | -------- | ------ | ------ |
-| `spawn` | Long-running processes, streams output | Stream | ❌ No |
-| `exec` | Short commands, get full output as string | Buffer (max 1MB) | ✅ Yes |
-| `execFile` | Run executable files directly | Buffer | ❌ No |
-| `fork` | Run a separate Node.js script with IPC | IPC channel | ❌ No |
+| `spawn` | Long-running processes, streams output | Stream |   No |
+| `exec` | Short commands, get full output as string | Buffer (max 1MB) |  Yes |
+| `execFile` | Run executable files directly | Buffer |   No |
+| `fork` | Run a separate Node.js script with IPC | IPC channel |   No |
 
 ```js
 const { spawn, exec, execFile, fork } = require('child_process');
@@ -3622,21 +3622,21 @@ child.on('message', result => console.log('Result:', result)); // receive from c
 | ------- | ------------- | --------------------- |
 | Memory usage | Loads entire file into RAM | Chunks — minimal memory |
 | Speed for small files | Faster | Slightly more overhead |
-| Speed for large files | Slow / may crash | ✅ Fast |
+| Speed for large files | Slow / may crash |  Fast |
 | Suitable for | Config files, small JSON | Logs, videos, large CSVs |
-| Works with pipe | ❌ | ✅ Yes |
+| Works with pipe |   |  Yes |
 
 ```js
 const fs = require('fs');
 
 // readFile — bad for large files (loads entire file into memory)
 fs.readFile('large-10gb-video.mp4', (err, data) => {
-  res.send(data); // ❌ entire 10GB in RAM before sending
+  res.send(data); //   entire 10GB in RAM before sending
 });
 
 // createReadStream — streams file in chunks
 fs.createReadStream('large-10gb-video.mp4')
-  .pipe(res); // ✅ sends chunk by chunk — minimal memory
+  .pipe(res); //  sends chunk by chunk — minimal memory
 
 // With range support (video seeking)
 const { start, end } = parseRangeHeader(req.headers.range, fileSize);
@@ -3705,7 +3705,7 @@ const results = await Promise.all(
 | Structure | Unopinionated — you decide | Opinionated — enforces modules, services, controllers |
 | Language | JavaScript (or TS manually) | TypeScript first-class |
 | DI | Manual | Built-in Dependency Injection container |
-| Decorators | ❌ | ✅ `@Controller`, `@Injectable`, `@Module` |
+| Decorators |   |  `@Controller`, `@Injectable`, `@Module` |
 | Learning curve | Low | Higher |
 | Scalability | Manual organization | Built for large teams/apps |
 | Under the hood | Uses raw http | Uses Express (or Fastify) underneath |
@@ -3926,8 +3926,8 @@ Found a mistake, have a better explanation, or want to add more questions?
 
 | Status | Repository |
 | ------ | ---------- |
-| ✅ Live | [react-interview-questions](https://github.com/sisi-tarak/react-interview-questions) |
-| ✅ Live | [nodejs-interview-questions](https://github.com/sisi-tarak/nodejs-interview-questions) |
+|  Live | [react-interview-questions](https://github.com/sisi-tarak/react-interview-questions) |
+|  Live | [nodejs-interview-questions](https://github.com/sisi-tarak/nodejs-interview-questions) |
 | 🔜 Coming | mern-interview-questions |
 | 🔜 Coming | dsa-interview-questions |
 | 🔜 Coming | java-interview-questions |
